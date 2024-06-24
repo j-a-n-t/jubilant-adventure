@@ -1,0 +1,15 @@
+services:
+  database:
+    container_name: task-database
+    image: mongo:7-jammy
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: admin
+      MONOG_INITDB_DATABASE: task
+    command: [ "mongod", "--auth" ]
+    volumes:
+      - ./database:/data/db
+      - ./scripts/init-db.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    ports:
+      - "27017:27017"
+    restart: always
